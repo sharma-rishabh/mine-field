@@ -1,15 +1,13 @@
 (function () {
   const getAdjacentElements = (id) => {
     const elements = [];
-    const top = document.getElementById(id + 2);
-    const bottom = document.getElementById(id - 2);
+    const top = document.getElementById(id + 10);
+    const bottom = document.getElementById(id - 10);
 
-    const leftId = (id - 1) % 2 === 0 ? '' : id - 1;
+    const leftId = (id - 1) % 10 === 0 ? '' : id - 1;
     const left = document.getElementById(leftId);
 
-    const rightId = id % 2 === 0 ? '' : id + 1;
-    const right = document.getElementById(rightId);
-
+    const rightId = id % 10 === 0 ? '' : id + 1;
     if (top) {
       elements.push(top);
     }
@@ -38,10 +36,12 @@
     });
   };
 
-  const removeEventListeners = (adjacentElements) => {
-    adjacentElements.forEach(element => {
+  const removeEventListeners = (adjacentElements, currentElement) => {
+    const listeningElements = adjacentElements;
+    listeningElements.forEach(element => {
       element.removeEventListener('click', minesweeper);
     });
+
   };
 
   const getColor = (validMoves, move) => {
@@ -55,6 +55,7 @@
   const endGame = (adjacentElements, id) => {
     removeEventListeners(adjacentElements);
     adjacentElements = getAdjacentElements(id);
+    removeEventListeners(adjacentElements);
     removeColors(adjacentElements);
   };
 
@@ -73,7 +74,7 @@
 
   const minesweeper = (event) => {
     moves++;
-    const validMoves = [4, 2]
+    const validMoves = [9, 19, 29, 39, 49, 48, 47, 37, 27, 26, 25, 24, 23, 33, 43, 53, 54, 55, 65, 75, 76, 77, 87, 97];
     const target = event.target;
     const id = +target.id;
 
@@ -91,12 +92,13 @@
       return;
     }
 
-    if (id === 4) {
+    if (id === 97) {
       endGame(adjacentElements, id);
       showWinMessage();
       return;
     }
 
+    removeEventListeners(adjacentElements);
     adjacentElements = getAdjacentElements(id);
     addEventListeners(id, adjacentElements);
     removeColors(adjacentElements);
