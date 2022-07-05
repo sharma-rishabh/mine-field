@@ -8,6 +8,8 @@
     const left = document.getElementById(leftId);
 
     const rightId = id % 10 === 0 ? '' : id + 1;
+    const right = document.getElementById(rightId);
+
     if (top) {
       elements.push(top);
     }
